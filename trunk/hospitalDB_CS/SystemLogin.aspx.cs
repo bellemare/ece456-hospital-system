@@ -25,7 +25,6 @@ public partial class Default2 : System.Web.UI.Page
         conServer = new MySqlConnection();
 
         strConnection = "Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';";
-
         conServer.ConnectionString = strConnection;
 
         try
@@ -48,7 +47,6 @@ public partial class Default2 : System.Web.UI.Page
         if (radBtn.Items[0].Selected)
         {
             cmd = new MySqlCommand("Select * from patients where PatientID='" + userName.Text + "' AND Password='" + passBox.Text + "'", conServer);
-            //statusLbl.Text = "Select * from patients where PatientID=" + userName.Text + " AND Password=" + passBox.Text;
         }
         else
         {
@@ -58,8 +56,35 @@ public partial class Default2 : System.Web.UI.Page
         {
             MySqlDataReader data;
             data = cmd.ExecuteReader();
-            if (data.HasRows)
-                Server.Transfer("Success.aspx", true);
+            
+            data.Read();
+
+            if (data.HasRows && data.GetValue(2).ToString() == "Admin")
+            {
+                Response.Redirect("Admin.aspx", true);
+            }
+            else if (data.HasRows && data.GetValue(2).ToString() == "Doctor")
+            {
+                Response.Redirect("Doctor.aspx", true);
+            }
+            else if (data.HasRows && data.GetValue(2).ToString() == "Financial")
+            {
+                Response.Redirect("Financial.aspx", true);
+            }
+            else if (data.HasRows && data.GetValue(2).ToString() == "Legal")
+            {
+                Response.Redirect("Legal.aspx", true);
+            }
+            else if (data.HasRows && data.GetValue(2).ToString() == "Staff")
+            {
+                Response.Redirect("Staff.aspx", true);
+            }
+            else
+            {
+                Response.Redirect("Failure.aspx", true);
+            }
+
+              
            
         }
         catch (Exception ex)
