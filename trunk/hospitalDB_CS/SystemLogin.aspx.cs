@@ -65,19 +65,19 @@ public partial class Default2 : System.Web.UI.Page
             }
             else if (data.HasRows && data.GetValue(2).ToString() == "Doctor")
             {
-                Response.Redirect("Doctor.aspx", true);
+                Response.Redirect("Doctor.aspx?empId=" + userName.Text, true);
             }
             else if (data.HasRows && data.GetValue(2).ToString() == "Financial")
             {
-                Response.Redirect("Financial.aspx", true);
+                Response.Redirect("Financial.aspx?empID=" + userName.Text, true);
             }
             else if (data.HasRows && data.GetValue(2).ToString() == "Legal")
             {
-                Response.Redirect("Legal.aspx", true);
+                Response.Redirect("Legal.aspx?empId=" + userName.Text, true);
             }
             else if (data.HasRows && data.GetValue(2).ToString() == "Staff")
             {
-                Response.Redirect("Staff.aspx", true);
+                Response.Redirect("Staff.aspx?empId=" + userName.Text, true);
             }
             else
             {
