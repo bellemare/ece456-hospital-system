@@ -59,7 +59,7 @@ public partial class Default2 : System.Web.UI.Page
             MySqlDataReader data;
             data = cmd.ExecuteReader();
             if (data.HasRows)
-                statusLbl.Text = "SUCCESS";
+                Server.Transfer("Success.aspx", true);
            
         }
         catch (Exception ex)
