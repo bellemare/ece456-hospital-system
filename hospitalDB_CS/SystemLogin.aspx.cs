@@ -58,7 +58,8 @@ public partial class Default2 : System.Web.UI.Page
         {
             MySqlDataReader data;
             data = cmd.ExecuteReader();
-            statusLbl.Text = "works";
+            if (data.HasRows)
+                statusLbl.Text = "SUCCESS";
            
         }
         catch (Exception ex)
