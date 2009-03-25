@@ -21,14 +21,14 @@ public partial class Doctor : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-            //conServer = new MySqlConnection();
-            //conServer.ConnectionString = "Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';";
-            //conServer.Open();
-            //cmd = new MySqlCommand();
-            //cmd.CommandText = "SELECT * FROM patients WHERE Doctor=" + Request.QueryString["empID"];
-            //cmd.Connection = conServer;
-            //reader = cmd.ExecuteReader();
-            //Session["PatientData"] = reader;
+        //conServer = new MySqlConnection();
+        //conServer.ConnectionString = "Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';";
+        //conServer.Open();
+        //cmd = new MySqlCommand();
+        //cmd.CommandText = "SELECT * FROM patients WHERE Doctor=" + Request.QueryString["empID"];
+        //cmd.Connection = conServer;
+        //reader = cmd.ExecuteReader();
+        //Session["PatientData"] = reader;
     }
 
     protected void Patients_RowEditing(object sender, GridViewEditEventArgs e)
@@ -39,8 +39,7 @@ public partial class Doctor : System.Web.UI.Page
     
     protected void Patients_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        Patients.DeleteRow(e.RowIndex);
-        Patients.DataBind();
+        Session["Deleting"] = Patients.Rows[e.RowIndex].Cells[0];
     }
 
     protected void ViewYourPatients_Click(object sender, EventArgs e)
