@@ -20,14 +20,17 @@
         AutoGenerateEditButton="True" onrowdeleting="Patients_RowDeleting" 
         onrowediting="Patients_RowEditing" 
         onrowcancelingedit="Patients_RowCancelingEdit" 
-        onrowupdated="Patients_RowUpdated" onrowupdating="Patients_RowUpdating" 
-        DataSourceID="PatientData">
+        DataSourceID="PatientData" DataKeyNames="PatientID">
     </asp:GridView>
     <asp:SqlDataSource ID="PatientData" runat="server" 
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
         ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
         SelectCommand="SELECT * FROM patients WHERE (Doctor = @empID)" 
-        UpdateCommand="UPDATE patients SET PatientName=@PatientName, Address=@Address,PhoneNum=@PhoneNum,HealthCardNum=@HealthCardNum,SIN=@SIN,Password=@Password,NumVisits=@NumVisits,Doctor=@Doctor,Status=@Status WHERE PatientID=@PatientID">
+        UpdateCommand="UPDATE patients SET PatientName=@PatientName, Address=@Address,PhoneNum=@PhoneNum,HealthCardNum=@HealthCardNum,SIN=@SIN,Password=@Password,NumVisits=@NumVisits,Doctor=@Doctor,Status=@Status WHERE PatientID=@PatientID"
+        DeleteCommand="DELETE FROM patients WHERE PatientID=@PatientID">
+        <DeleteParameters>
+            <asp:SessionParameter SessionField="Deleting" Name="PatientID" />
+        </DeleteParameters>
         <SelectParameters>
             <asp:QueryStringParameter Name="empID" QueryStringField="empID" />
         </SelectParameters>
