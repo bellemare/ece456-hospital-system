@@ -18,35 +18,50 @@ public partial class Doctor : System.Web.UI.Page
     MySqlConnection conServer;
     MySqlDataReader reader;
     MySqlCommand cmd;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        conServer = new MySqlConnection();
-        conServer.ConnectionString = "Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';";
-
-        conServer.Open();
-        Label1.Text = Request.QueryString["empID"];
-    }
-
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        cmd = new MySqlCommand();
-        cmd.CommandText = "SELECT * FROM patients WHERE Doctor=1";
-        cmd.Connection = conServer;
-
-        reader = cmd.ExecuteReader();
-        Patients.DataSource = reader;
-        Patients.DataBind();
+            //conServer = new MySqlConnection();
+            //conServer.ConnectionString = "Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';";
+            //conServer.Open();
+            //cmd = new MySqlCommand();
+            //cmd.CommandText = "SELECT * FROM patients WHERE Doctor=" + Request.QueryString["empID"];
+            //cmd.Connection = conServer;
+            //reader = cmd.ExecuteReader();
+            //Session["PatientData"] = reader;
     }
 
     protected void Patients_RowEditing(object sender, GridViewEditEventArgs e)
     {
         Patients.EditIndex = e.NewEditIndex;
-        Button1_Click( null, EventArgs.Empty);
-
+        //Patients.DataSource = reader;        
     }
+    
     protected void Patients_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
         Patients.DeleteRow(e.RowIndex);
         Patients.DataBind();
+    }
+
+    protected void ViewYourPatients_Click(object sender, EventArgs e)
+    {
+        Patients.DataSource = PatientData;
+        Patients.DataBind();
+    }
+    
+    protected void Patients_RowUpdated(object sender, GridViewUpdatedEventArgs e)
+    {
+
+    }
+    
+    protected void Patients_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+    {
+        Patients.EditIndex = -1;
+        //Patients.DataSource = reader;
+    }
+    
+    protected void Patients_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {
+
     }
 }
