@@ -72,6 +72,11 @@
         <asp:Button ID="docApptSearch" runat="server" onclick="docApptSearch_Click" 
             Text="Search" />
     
+        <br />
+        <br />
+        <asp:GridView ID="apptResultGrid" runat="server">
+        </asp:GridView>
+    
     </div>
     </form>
 </body>
