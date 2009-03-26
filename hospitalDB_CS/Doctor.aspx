@@ -26,8 +26,11 @@
         onrowediting="Patients_RowEditing" 
         onrowcancelingedit="Patients_RowCancelingEdit" 
         DataSourceID="PatientData" DataKeyNames="PatientID" 
-        onrowupdating="Patients_RowUpdating">
+        onrowupdating="Patients_RowUpdating" AutoGenerateSelectButton="True">
+        <SelectedRowStyle BorderColor="Red" BorderStyle="Solid" />
     </asp:GridView>
+    <asp:Button ID="EditPatient" runat="server" Text="View Patient Details" 
+        onclick="EditPatient_Clicked" />
     <asp:SqlDataSource ID="PatientData" runat="server" 
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
         ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
