@@ -28,4 +28,20 @@ public partial class Default2 : System.Web.UI.Page
     {
         empGrid.DataBind();
     }
+    protected void btnAddPatient_Click(object sender, EventArgs e)
+    {
+        patientData.Insert();
+    }
+    protected void patientData_Updated(object sender, SqlDataSourceStatusEventArgs e)
+    {
+        patientGrid.DataBind();
+    }
+    protected void patientGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        Session["PatientID"] = patientGrid.Rows[e.RowIndex].Cells[0];
+    }
+    protected void empGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        Session["EmployeeID"] = empGrid.Rows[e.RowIndex].Cells[0];
+    }
 }

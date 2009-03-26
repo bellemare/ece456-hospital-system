@@ -30,6 +30,7 @@ public partial class Financial : System.Web.UI.Page
         catch
         {
             startDate[0] = 1950;
+
         }
 
         try
