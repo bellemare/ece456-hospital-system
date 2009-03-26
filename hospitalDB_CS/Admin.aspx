@@ -33,7 +33,14 @@
     <asp:SqlDataSource ID="employeeData" runat="server" 
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
         ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
-        SelectCommand="SELECT * FROM EMPLOYEES" onupdated="employeeData_Updated"></asp:SqlDataSource>
+        SelectCommand="SELECT * FROM EMPLOYEES" onupdated="employeeData_Updated"
+        InsertCommand="INSERT INTO employees (EmployeeName, Job, Passwd) VALUES (@EmployeeName, @Job, @Passwd)">
+        <InsertParameters>
+            <asp:ControlParameter Name="EmployeeName" ControlID="txtEmpName" PropertyName="Text" />
+            <asp:ControlParameter Name="Job" ControlID="jobList" PropertyName="SelectedValue" />
+            <asp:ControlParameter Name="Passwd" ControlID="txtEmpPass" PropertyName="Text" />
+        </InsertParameters>
+        </asp:SqlDataSource>
     </form>
 </body>
 </html>
