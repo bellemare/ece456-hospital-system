@@ -11,7 +11,8 @@
     <div>
     
     </div>
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="Label1" runat="server" Text="::"></asp:Label>
+    <asp:Label ID="Label2" runat="server" Text="::"></asp:Label>
     <p>
         <asp:Button ID="ViewYourPatients" runat="server" onclick="ViewYourPatients_Click" 
             Text="View Your Patients" />
@@ -24,7 +25,8 @@
         AutoGenerateEditButton="True" onrowdeleting="Patients_RowDeleting" 
         onrowediting="Patients_RowEditing" 
         onrowcancelingedit="Patients_RowCancelingEdit" 
-        DataSourceID="PatientData" DataKeyNames="PatientID">
+        DataSourceID="PatientData" DataKeyNames="PatientID" 
+        onrowupdating="Patients_RowUpdating">
     </asp:GridView>
     <asp:SqlDataSource ID="PatientData" runat="server" 
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
