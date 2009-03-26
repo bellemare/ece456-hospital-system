@@ -25,6 +25,7 @@ public partial class Financial : System.Web.UI.Page
         {
             startDate[0] = Int32.Parse(startYearBox.Text);
             if (startDate[0] < 1900) startDate[0] = 1900;
+            else if (startDate[0] > 2100) startDate[0] = 2100;
         }
         catch
         {
@@ -90,7 +91,8 @@ public partial class Financial : System.Web.UI.Page
         try
         {
             endDate[0] = Int32.Parse(endYearBox.Text);
-            if (endDate[0] < 0) endDate[0] = 0;
+            if (endDate[0] < 1900) endDate[0] = 1900;
+            else if (endDate[0] > 2100) endDate[0] = 2100;
         }
         catch
         {
@@ -200,12 +202,12 @@ public partial class Financial : System.Web.UI.Page
         cmd.Connection = conServer;
         //cmd.CommandText = "SELECT * FROM visits WHERE DoctorID=" + docID + " AND StartDate >='" + start.ToString("s") + "' AND StartDate <='" + end.ToString("s") + "'"; 
 
-        cmd.CommandText = "select * from visits,patients WHERE DoctorID=" + docID + " AND StartDate >='" + start.ToString("s") + "' AND StartDate <='" + end.ToString("s") + "' AND visits.PatientID = patients.PatientID";
+        cmd.CommandText = "select visits.VisitID, visits.PatientID, visits.DoctorID, visits.StartDate, visits.EndDate, visits.Comments from visits,patients WHERE DoctorID=" + docID + " AND StartDate >='" + start.ToString("s") + "' AND StartDate <='" + end.ToString("s") + "' AND visits.PatientID = patients.PatientID";
         reader = cmd.ExecuteReader();
         apptResultGrid.DataSource = reader;
         apptResultGrid.DataBind();
-    
-        
+
+        conServer.Close();
         /* Add New Appointment code:
         *
                 DateTime newDate = new DateTime(2008, 1, 14, 16, 30, 0);
@@ -241,6 +243,7 @@ public partial class Financial : System.Web.UI.Page
         reader = cmd.ExecuteReader();
         apptResultGrid.DataSource = reader;
         apptResultGrid.DataBind();
+        conServer.Close();
     }
     protected void doctorSurgeriesButton_Click(object sender, EventArgs e)
     {
@@ -264,6 +267,7 @@ public partial class Financial : System.Web.UI.Page
         reader = cmd.ExecuteReader();
         apptResultGrid.DataSource = reader;
         apptResultGrid.DataBind();
+        conServer.Close();
     }
     protected void doctorDiagnosisButton_Click(object sender, EventArgs e)
     {
@@ -287,6 +291,7 @@ public partial class Financial : System.Web.UI.Page
         reader = cmd.ExecuteReader();
         apptResultGrid.DataSource = reader;
         apptResultGrid.DataBind();
+        conServer.Close();
     }
     protected void patientVisitsButton_Click(object sender, EventArgs e)
     {
@@ -310,6 +315,7 @@ public partial class Financial : System.Web.UI.Page
         reader = cmd.ExecuteReader();
         apptResultGrid.DataSource = reader;
         apptResultGrid.DataBind();
+        conServer.Close();
     }
     protected void patientPresButton_Click(object sender, EventArgs e)
     {
@@ -333,6 +339,7 @@ public partial class Financial : System.Web.UI.Page
         reader = cmd.ExecuteReader();
         apptResultGrid.DataSource = reader;
         apptResultGrid.DataBind();
+        conServer.Close();
     }
     protected void patientSurgeriesButton_Click(object sender, EventArgs e)
     {
@@ -356,6 +363,7 @@ public partial class Financial : System.Web.UI.Page
         reader = cmd.ExecuteReader();
         apptResultGrid.DataSource = reader;
         apptResultGrid.DataBind();
+        conServer.Close();
     }
     protected void patientDiagnosisButton_Click(object sender, EventArgs e)
     {
@@ -379,5 +387,106 @@ public partial class Financial : System.Web.UI.Page
         reader = cmd.ExecuteReader();
         apptResultGrid.DataSource = reader;
         apptResultGrid.DataBind();
+        conServer.Close();
+    }
+    protected void patToDocButton_Click(object sender, EventArgs e)
+    {
+        int patientID = getPatientID();
+        int docID = getDocID();
+        int[] endDate = new int[5];
+        int[] startDate = new int[5];
+
+        endDate = getDateTimeEnd();
+        startDate = getDateTimeStart();
+
+        DateTime end = new DateTime(endDate[0], endDate[1], endDate[2], endDate[3], endDate[4], 0);
+        DateTime start = new DateTime(startDate[0], startDate[1], startDate[2], startDate[3], startDate[4], 0);
+
+        conServer = new MySqlConnection();
+        conServer.ConnectionString = "Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';";
+        conServer.Open();
+        cmd = new MySqlCommand();
+        cmd.Connection = conServer;
+        cmd.CommandText = "select * from visits WHERE PatientID=" + patientID + " AND DoctorID=" + docID + " AND StartDate >='" + start.ToString("s") + "' AND StartDate <='" + end.ToString("s")+"'";
+
+        reader = cmd.ExecuteReader();
+        apptResultGrid.DataSource = reader;
+        apptResultGrid.DataBind();
+        conServer.Close();
+    }
+    protected void patPresDocButton_Click(object sender, EventArgs e)
+    {
+        int patientID = getPatientID();
+        int docID = getDocID();
+        int[] endDate = new int[5];
+        int[] startDate = new int[5];
+
+        endDate = getDateTimeEnd();
+        startDate = getDateTimeStart();
+
+        DateTime end = new DateTime(endDate[0], endDate[1], endDate[2], endDate[3], endDate[4], 0);
+        DateTime start = new DateTime(startDate[0], startDate[1], startDate[2], startDate[3], startDate[4], 0);
+
+        conServer = new MySqlConnection();
+        conServer.ConnectionString = "Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';";
+        conServer.Open();
+        cmd = new MySqlCommand();
+        cmd.Connection = conServer;
+        cmd.CommandText = "select * from visits,prescriptions WHERE PatientID=" + patientID + " AND DoctorID=" + docID + " AND StartDate >='" + start.ToString("s") + "' AND StartDate <='" + end.ToString("s") + "' AND prescriptions.VisitID = visits.VisitID";
+
+        reader = cmd.ExecuteReader();
+        apptResultGrid.DataSource = reader;
+        apptResultGrid.DataBind();
+        conServer.Close();
+    }
+    protected void patSurgDocButton_Click(object sender, EventArgs e)
+    {
+        int patientID = getPatientID();
+        int docID = getDocID();
+        int[] endDate = new int[5];
+        int[] startDate = new int[5];
+
+        endDate = getDateTimeEnd();
+        startDate = getDateTimeStart();
+
+        DateTime end = new DateTime(endDate[0], endDate[1], endDate[2], endDate[3], endDate[4], 0);
+        DateTime start = new DateTime(startDate[0], startDate[1], startDate[2], startDate[3], startDate[4], 0);
+
+        conServer = new MySqlConnection();
+        conServer.ConnectionString = "Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';";
+        conServer.Open();
+        cmd = new MySqlCommand();
+        cmd.Connection = conServer;
+        cmd.CommandText = "select * from visits,surgeries WHERE PatientID=" + patientID + " AND DoctorID=" + docID + " AND StartDate >='" + start.ToString("s") + "' AND StartDate <='" + end.ToString("s") + "' AND surgeries.VisitID = visits.VisitID";
+
+        reader = cmd.ExecuteReader();
+        apptResultGrid.DataSource = reader;
+        apptResultGrid.DataBind();
+        conServer.Close();
+    }
+    protected void patDiagDocButton_Click(object sender, EventArgs e)
+    {
+        int patientID = getPatientID();
+        int docID = getDocID();
+        int[] endDate = new int[5];
+        int[] startDate = new int[5];
+
+        endDate = getDateTimeEnd();
+        startDate = getDateTimeStart();
+
+        DateTime end = new DateTime(endDate[0], endDate[1], endDate[2], endDate[3], endDate[4], 0);
+        DateTime start = new DateTime(startDate[0], startDate[1], startDate[2], startDate[3], startDate[4], 0);
+
+        conServer = new MySqlConnection();
+        conServer.ConnectionString = "Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';";
+        conServer.Open();
+        cmd = new MySqlCommand();
+        cmd.Connection = conServer;
+        cmd.CommandText = "select * from visits,diagnosis WHERE PatientID=" + patientID + " AND DoctorID=" + docID + " AND StartDate >='" + start.ToString("s") + "' AND StartDate <='" + end.ToString("s") + "' AND diagnosis.VisitID = visits.VisitID";
+
+        reader = cmd.ExecuteReader();
+        apptResultGrid.DataSource = reader;
+        apptResultGrid.DataBind();
+        conServer.Close();
     }
 }
