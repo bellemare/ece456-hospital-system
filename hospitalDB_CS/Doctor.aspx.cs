@@ -40,6 +40,16 @@ public partial class Doctor : System.Web.UI.Page
     
     protected void Patients_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
+        //this is for error checking
+        for (int i = 0; i < e.NewValues.Count; i++)
+        {
+            //check each NewValue and see if it's not shit
+            //we already know what the column numbers are
+            //0=PatientName,1=Address,2=PhoneNum,3=HealthCardNum
+            //4=SIN,5=NumVisits,6=Doctor,7=Status
+        }
+
+        //this is for audit
         for (int i = 0; i < e.NewValues.Count; i++)
         {
             if (e.NewValues[i].ToString() != e.OldValues[i].ToString())
