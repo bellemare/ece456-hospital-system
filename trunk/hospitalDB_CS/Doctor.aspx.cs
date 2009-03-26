@@ -24,12 +24,8 @@ public partial class Doctor : System.Web.UI.Page
 
     protected void Patients_RowEditing(object sender, GridViewEditEventArgs e)
     {
-        Patients.EditIndex = e.NewEditIndex;    
-    }
-    
-    protected void Patients_RowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
-        Session["Deleting"] = Patients.Rows[e.RowIndex].Cells[0];
+        Patients.EditIndex = e.NewEditIndex;
+        Patients.SelectedIndex = e.NewEditIndex;
     }
 
     protected void ViewYourPatients_Click(object sender, EventArgs e)
@@ -75,6 +71,13 @@ public partial class Doctor : System.Web.UI.Page
         if (Patients.SelectedIndex >= 0)
         {
             Response.Redirect("ViewPatient.aspx?patID=" + Patients.DataKeys[Patients.SelectedIndex].Values[0].ToString() + "&empID=" + Request.QueryString["empID"] );
+        }
+    }
+    protected void Patients_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
+    {
+        if (Patients.EditIndex != -1)
+        {
+            e.Cancel = true; 
         }
     }
 }
