@@ -47,49 +47,65 @@ public partial class Default2 : System.Web.UI.Page
         if (radBtn.Items[0].Selected)
         {
             cmd = new MySqlCommand("Select * from patients where PatientID='" + userName.Text + "' AND Password='" + passBox.Text + "'", conServer);
+
+            try
+            {
+                MySqlDataReader data;
+                data = cmd.ExecuteReader();
+
+                data.Read();
+                if (data.HasRows)
+                    Response.Redirect("ViewPatient.aspx?patID=" + userName.Text, true);
+
+            }
+            catch (Exception ex)
+            {
+                statusLbl.Text = ex.Message;
+            }
+
+
         }
         else
         {
             cmd = new MySqlCommand("Select * from employees where EmployeeID='" + userName.Text + "' AND Passwd='" + passBox.Text + "'", conServer);
-        }
-        try
-        {
-            MySqlDataReader data;
-            data = cmd.ExecuteReader();
-            
-            data.Read();
 
-            if (data.HasRows && data.GetValue(2).ToString() == "Admin")
+            try
             {
-                Response.Redirect("Admin.aspx", true);
-            }
-            else if (data.HasRows && data.GetValue(2).ToString() == "Doctor")
-            {
-                Response.Redirect("Doctor.aspx?empId=" + userName.Text, true);
-            }
-            else if (data.HasRows && data.GetValue(2).ToString() == "Financial")
-            {
-                Response.Redirect("Financial.aspx?empID=" + userName.Text, true);
-            }
-            else if (data.HasRows && data.GetValue(2).ToString() == "Legal")
-            {
-                Response.Redirect("Legal.aspx?empId=" + userName.Text, true);
-            }
-            else if (data.HasRows && data.GetValue(2).ToString() == "Staff")
-            {
-                Response.Redirect("Staff.aspx?empId=" + userName.Text, true);
-            }
-            else
-            {
-                Response.Redirect("Failure.aspx", true);
+                MySqlDataReader data;
+                data = cmd.ExecuteReader();
+                
+                data.Read();
+
+                if (data.HasRows && data.GetValue(2).ToString() == "Admin")
+                {
+                    Response.Redirect("Admin.aspx", true);
+                }
+                else if (data.HasRows && data.GetValue(2).ToString() == "Doctor")
+                {
+                    Response.Redirect("Doctor.aspx?empId=" + userName.Text, true);
+                }
+                else if (data.HasRows && data.GetValue(2).ToString() == "Financial")
+                {
+                    Response.Redirect("Financial.aspx?empID=" + userName.Text, true);
+                }
+                else if (data.HasRows && data.GetValue(2).ToString() == "Legal")
+                {
+                    Response.Redirect("Legal.aspx?empId=" + userName.Text, true);
+                }
+                else if (data.HasRows && data.GetValue(2).ToString() == "Staff")
+                {
+                    Response.Redirect("Staff.aspx?empId=" + userName.Text, true);
+                }
+                else
+                {
+                    Response.Redirect("Failure.aspx", true);
+                }
             }
 
-              
-           
-        }
-        catch (Exception ex)
-        {
-            statusLbl.Text = ex.Message;
+            catch (Exception ex)
+            {
+                statusLbl.Text = ex.Message;
+            }
         }
     }
 }

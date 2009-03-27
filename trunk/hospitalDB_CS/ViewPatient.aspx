@@ -28,12 +28,21 @@
             onclick="ViewPrescriptions_Click" />
     
     </div>
-    <asp:GridView ID="PatientView" runat="server">
+    <asp:GridView ID="PatientView" runat="server" 
+        onrowcancelingedit="PatientView_RowCancelingEdit" 
+        onrowediting="PatientView_RowEditing" DataKeyNames="VisitID" 
+        DataSourceID="PatientData" onrowupdating="PatientView_RowUpdating" 
+        onrowupdated="PatientView_RowUpdated">
     </asp:GridView>
     <asp:SqlDataSource ID="PatientData" runat="server" 
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
-        ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" >
-        
+        ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>"
+        UpdateCommand="UPDATE visits SET visits.StartDate=@StartDate,visits.EndDate=@EndDate,visits.Comments=@Comments WHERE VisitID=@VisitID" >
+        <UpdateParameters>
+            <asp:SessionParameter Name="StartDate" SessionField="newStartDate" Type="DateTime"/>
+            <asp:SessionParameter Name="EndDate" SessionField="newEndDate" Type="DateTime"/>
+            <asp:ControlParameter Name="Comments"  ControlID="PatientView" PropertyName="SelectedRow.Cells[4].Text" />
+        </UpdateParameters>
         </asp:SqlDataSource>
     </form>
 </body>
