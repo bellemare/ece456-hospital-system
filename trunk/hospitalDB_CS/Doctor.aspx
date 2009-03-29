@@ -13,6 +13,17 @@
     </div>
     <asp:Label ID="Label1" runat="server" Text="::"></asp:Label>
     <asp:Label ID="Label2" runat="server" Text="::"></asp:Label>
+    <br />
+    <br />
+    <asp:Button ID="btnViewAll" runat="server" Text="View All Patients" 
+        onclick="btnViewAll_Click" />
+    <asp:GridView ID="allpatientGrid" runat="server" DataSourceID="viewall" 
+        Visible="False">
+    </asp:GridView>
+    <asp:SqlDataSource ID="viewall" runat="server" 
+        ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
+        ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
+        SelectCommand="SELECT PatientID, PatientName, Doctor FROM patients"></asp:SqlDataSource>
     <p>
         <asp:Button ID="ViewYourPatients" runat="server" onclick="ViewYourPatients_Click" 
             Text="View Your Patients" />
