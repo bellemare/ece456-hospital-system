@@ -5,32 +5,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>HospitalDB - Doctor View</title>
+    <style type="text/css">
+        .style1
+        {
+            font-weight: bold;
+            text-decoration: underline;
+            color: #000099;
+        }
+        .style2
+        {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+    <div class="style1">
     
-    </div>
+        Hospital Database</div>
     <asp:Label ID="Label1" runat="server" Text="::"></asp:Label>
     <asp:Label ID="Label2" runat="server" Text="::"></asp:Label>
     <br />
-    <br />
-    <asp:Button ID="btnViewAll" runat="server" Text="View All Patients" 
-        onclick="btnViewAll_Click" />
-    <asp:GridView ID="allpatientGrid" runat="server" DataSourceID="viewall" 
-        Visible="False">
-    </asp:GridView>
-    <asp:SqlDataSource ID="viewall" runat="server" 
-        ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
-        ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
-        SelectCommand="SELECT PatientID, PatientName, Doctor FROM patients"></asp:SqlDataSource>
+    <span class="style2">Doctor</span><br />
     <p>
+        View all patients assigned to you:&nbsp;<br />
         <asp:Button ID="ViewYourPatients" runat="server" onclick="ViewYourPatients_Click" 
-            Text="View Your Patients" />
+            Text="View Your Patients" Width="160px" />
     </p>
-    <asp:TextBox ID="txtPatient" runat="server"></asp:TextBox>
+    Search for a specific patient (User ID, Name, Status, Comments)<br />
     <asp:Button ID="btnSearch" runat="server" Text="Search Patients" 
         onclick="btnSearch_Click" />
+    &nbsp;&nbsp;&nbsp;
+    <asp:TextBox ID="txtPatient" runat="server"></asp:TextBox>
     <br />
     <asp:GridView ID="Patients" runat="server" 
         AutoGenerateEditButton="True" 
@@ -41,13 +48,11 @@
         onselectedindexchanging="Patients_SelectedIndexChanging">
         <SelectedRowStyle BorderColor="Red" BorderStyle="Solid" />
     </asp:GridView>
-    <asp:Button ID="EditPatient" runat="server" Text="View Patient Details" 
-        onclick="EditPatient_Clicked" />
     <asp:SqlDataSource ID="PatientData" runat="server" 
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
         ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
-        SelectCommand="SELECT PatientID,PatientName,Address,PhoneNum,HealthCardNum,SIN,(SELECT COUNT(*) FROM visits as v WHERE v.PatientID=p.PatientID) as NumVisits,Doctor,Status FROM patients as p WHERE (Doctor = @empID)" 
-        UpdateCommand="UPDATE patients SET PatientName=@PatientName, Address=@Address,PhoneNum=@PhoneNum,HealthCardNum=@HealthCardNum,SIN=@SIN,NumVisits=@NumVisits,Doctor=@Doctor,Status=@Status WHERE PatientID=@PatientID"
+        SelectCommand="SELECT PatientID,PatientName,Address,PhoneNum,(SELECT COUNT(*) FROM visits as v WHERE v.PatientID=p.PatientID) as NumVisits,Doctor,Status FROM patients as p WHERE (Doctor = @empID)" 
+        UpdateCommand="UPDATE patients SET PatientName=@PatientName, Address=@Address,PhoneNum=@PhoneNum,NumVisits=@NumVisits,Doctor=@Doctor,Status=@Status WHERE PatientID=@PatientID"
         DeleteCommand="DELETE FROM patients WHERE PatientID=@PatientID">
         <DeleteParameters>
             <asp:SessionParameter SessionField="Deleting" Name="PatientID" />
@@ -67,6 +72,22 @@
             <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[8].Text" Name="Status" Type="UInt32" />
         </UpdateParameters>
     </asp:SqlDataSource>
+    View the details of the selected patient:<br />
+    <asp:Button ID="EditPatient" runat="server" Text="View Patient Details" 
+        onclick="EditPatient_Clicked" Width="160px" />
+    <br />
+    <br />
+    <asp:Button ID="btnViewAll" runat="server" Text="View All Patients" 
+        onclick="btnViewAll_Click" />
+    <asp:GridView ID="allpatientGrid" runat="server" DataSourceID="viewall" 
+        Visible="False">
+    </asp:GridView>
+    <asp:SqlDataSource ID="viewall" runat="server" 
+        ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
+        ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
+        SelectCommand="SELECT PatientID, PatientName, Doctor FROM patients"></asp:SqlDataSource>
+    <p>
+        &nbsp;</p>
     </form>
 </body>
 </html>
