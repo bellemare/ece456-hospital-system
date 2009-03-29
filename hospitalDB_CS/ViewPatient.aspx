@@ -91,6 +91,9 @@
             <asp:ControlParameter Name="Comments"  ControlID="PatientView" PropertyName="SelectedRow.Cells[4].Text" />
         </UpdateParameters>
         </asp:SqlDataSource>
+        <br />
+        
+        <input type="button" value="Back" name="ClickBack" onclick=(history.back())>
     </form>
 </body>
 </html>
