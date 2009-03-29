@@ -151,7 +151,7 @@ public partial class Doctor : System.Web.UI.Page
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         string oldSel = PatientData.SelectCommand;
-        PatientData.SelectCommand = "Select * from Patients where Doctor=" + Request.QueryString["empID"] + " AND ( PatientName LIKE '%" + txtPatient.Text + "%' OR PatientID LIKE '%" + txtPatient.Text + "%' OR SIN LIKE '%" + txtPatient.Text + "%')";
+        PatientData.SelectCommand = "Select Patients.PatientID, Patients.PatientName, Patients.PhoneNum, Patients.NumVisits, Patients.Doctor, Patients.Status from Patients where Doctor=" + Request.QueryString["empID"] + " AND ( PatientName LIKE '%" + txtPatient.Text + "%' OR PatientID LIKE '%" + txtPatient.Text + "%')";
         Patients.DataSource = PatientData;
         Patients.DataBind();
         PatientData.SelectCommand = oldSel;

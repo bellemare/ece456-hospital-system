@@ -10,22 +10,46 @@
         {
             height: 437px;
         }
+        .style1
+        {
+            font-weight: bold;
+            text-decoration: underline;
+            color: #000099;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
     
+        <span class="style1">Hospital Database<br />
+        </span>
+        <br />
+        Welcome,     
         <asp:Label ID="PatientName" runat="server"></asp:Label>
         <br />
+        <hr />
+        <br />
+        View all your previous and future appointments to the Hospital<br />
     
-        <asp:Button ID="ViewVisits" runat="server" Text="View All Visits" 
-            onclick="ViewVisits_Click" />
+        <asp:Button ID="ViewVisits" runat="server" Text="View Appointments" 
+            onclick="ViewVisits_Click" Width="160px" />
+    
+        <br />
+        <hr />
+        <br />
+        View all completed and scheduled surgeries<br />
     
         <asp:Button ID="ViewSurgeries" runat="server" Text="View Surgeries" 
-            onclick="ViewSurgeries_Click" />
+            onclick="ViewSurgeries_Click" Width="160px" />
+        <br />
+        <hr />
+        <br />
+        View all your past and present prescriptions<br />
         <asp:Button ID="ViewPrescriptions" runat="server" Text="View Prescriptions" 
-            onclick="ViewPrescriptions_Click" />
+            onclick="ViewPrescriptions_Click" Width="160px" />
+    
+        <br />
     
     </div>
     <asp:GridView ID="PatientView" runat="server" 

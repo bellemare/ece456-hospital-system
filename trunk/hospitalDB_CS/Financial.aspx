@@ -15,17 +15,21 @@
             text-decoration: underline;
             font-weight: bold;
         }
+        .style2
+        {
+            color: #000099;
+            font-weight: bold;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
     
-        <br />
-        <br />
+        <span class="style2">Hospital Database</span><br />
         <br />
         <span class="style1">Finance</span><br />
-        <br />
         <b>Specify Time Period:<br />
         </b>
         <br />
@@ -122,11 +126,10 @@
             onclick="doctorDiagnosisButton_Click" Text="Doctor Diagnosis" Width="160px" />
         <br />
         <br />
-        <br />
-        <br />
         <asp:GridView ID="apptResultGrid" runat="server">
         </asp:GridView>
         <br />
+        <hr />
         <br />
         <br />
         <asp:Label ID="Label1" runat="server"></asp:Label>
