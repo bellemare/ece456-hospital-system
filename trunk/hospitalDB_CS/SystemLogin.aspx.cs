@@ -84,7 +84,7 @@ public partial class Default2 : System.Web.UI.Page
                 {
                     Response.Redirect("Doctor.aspx?empId=" + userName.Text, true);
                 }
-                else if (data.HasRows && data.GetValue(2).ToString() == "Financial")
+                else if (data.HasRows && data.GetValue(2).ToString() == "Finance")
                 {
                     Response.Redirect("Financial.aspx?empID=" + userName.Text, true);
                 }
