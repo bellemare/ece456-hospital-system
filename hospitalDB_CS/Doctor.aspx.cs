@@ -171,4 +171,8 @@ public partial class Doctor : System.Web.UI.Page
             e.Cancel = true; 
         }
     }
+    protected void btnViewAll_Click(object sender, EventArgs e)
+    {
+        allpatientGrid.Visible = true;
+    }
 }

@@ -91,7 +91,7 @@
     <asp:SqlDataSource ID="patientData" runat="server" 
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
         ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
-        SelectCommand="SELECT * FROM patients"
+        SelectCommand="SELECT PatientID,PatientName,Address,PhoneNum,HealthCardNum,SIN, Password,(SELECT COUNT(*) FROM visits as v WHERE v.PatientID=p.PatientID) as NumVisits,Doctor,Status FROM patients as p" 
         DeleteCommand="DELETE FROM patients WHERE PatientID = @PatientID"
         UpdateCommand="UPDATE patients SET PatientName=@PatientName, Address=@Address,PhoneNum=@PhoneNum,HealthCardNum=@HealthCardNum,SIN=@SIN,Password=@Password,NumVisits=@NumVisits,Doctor=@Doctor,Status=@Status WHERE PatientID=@PatientID"
         InsertCommand="INSERT INTO patients (PatientName, Address, PhoneNum, HealthCardNum, SIN, Password, Doctor, Status) VALUES (@PatientName, @Address, @PhoneNum, @HealthCardNum, @SIN, @Password, @Doctor, @Status )" 
