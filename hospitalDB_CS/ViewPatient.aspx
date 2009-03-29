@@ -34,8 +34,8 @@
             ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
             InsertCommand="s" 
             ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
-            SelectCommand="SELECT * FROM patients WHERE PatientID = @patID" 
-            UpdateCommand="UPDATE patients SET PatientName=@PatientName, Address=@Address,PhoneNum=@PhoneNum,HealthCardNum=@HealthCardNum,SIN=@SIN,Password=@Password,NumVisits=@NumVisits,Doctor=@Doctor,Status=@Status WHERE PatientID=@patID">
+            SelectCommand="SELECT PatientID, PatientName, Address, PhoneNum, HealthCardNum, SIN, Password FROM patients WHERE PatientID = @patID" 
+            UpdateCommand="UPDATE patients SET PatientName=@PatientName, Address=@Address,PhoneNum=@PhoneNum,HealthCardNum=@HealthCardNum,SIN=@SIN,Password=@Password WHERE PatientID=@patID">
                     <SelectParameters>
             <asp:QueryStringParameter Name="patID" QueryStringField="patID" />
         </SelectParameters>
@@ -48,9 +48,6 @@
             <asp:ControlParameter ControlID="selfgrid" PropertyName="SelectedRow.Cells[4].Text" Name="HealthCardNum" Type="String" />
             <asp:ControlParameter ControlID="selfgrid" PropertyName="SelectedRow.Cells[5].Text" Name="SIN" Type="String" />
             <asp:ControlParameter ControlID="selfgrid" PropertyName="SelectedRow.Cells[6].Text" Name="Password" Type="String" />
-            <asp:ControlParameter ControlID="selfgrid" PropertyName="SelectedRow.Cells[7].Text" Name="NumVisits" Type="UInt32" />
-            <asp:ControlParameter ControlID="selfgrid" PropertyName="SelectedRow.Cells[8].Text" Name="Doctor" Type="UInt32" />
-            <asp:ControlParameter ControlID="selfgrid" PropertyName="SelectedRow.Cells[9].Text" Name="Status" Type="UInt32" />
         </UpdateParameters>
         </asp:SqlDataSource>
         <br />
