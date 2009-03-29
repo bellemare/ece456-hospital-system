@@ -130,11 +130,12 @@
         </asp:GridView>
         <br />
         <hr />
-        <br />
-        <br />
         <asp:Label ID="Label1" runat="server"></asp:Label>
     
-    </div>
+        <br />
+        <br />
+        
+        <input type="button" value="Back" name="ClickBack" onclick=(history.back())></div>
     </form>
 </body>
 </html>

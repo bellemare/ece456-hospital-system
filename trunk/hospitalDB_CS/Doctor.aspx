@@ -86,8 +86,10 @@
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
         ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
         SelectCommand="SELECT PatientID, PatientName, Doctor FROM patients"></asp:SqlDataSource>
-    <p>
-        &nbsp;</p>
     </form>
+<hr />
+<p>
+        
+        <input type="button" value="Back" name="ClickBack" onclick=(history.back())></p>
 </body>
 </html>

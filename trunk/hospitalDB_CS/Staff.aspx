@@ -49,5 +49,8 @@
     \<asp:Button ID="Button1" runat="server" onclick="Button1_Click" 
         Text="Book Appointment" />
     </form>
+<p class="style1">
+        
+        <input type="button" value="Back" name="ClickBack" onclick=(history.back())></p>
 </body>
 </html>
