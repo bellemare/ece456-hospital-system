@@ -16,6 +16,10 @@ public partial class ViewPatient : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         PatientName.Text = "Patient #" + Request.QueryString["patID"];
+        if (Request.QueryString["empID"] == null)
+        {
+            selfgrid.Visible = true;
+        }
     }
 
     protected void ViewSurgeries_Click(object sender, EventArgs e)
