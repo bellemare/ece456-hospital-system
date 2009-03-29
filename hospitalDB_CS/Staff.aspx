@@ -20,9 +20,34 @@
     <form id="form1" runat="server">
     <div>
     
+        <asp:Label ID="Label1" runat="server"></asp:Label>
+        <br />
+        <asp:TextBox ID="PatNum" runat="server">Patient Number</asp:TextBox>
+        <asp:TextBox ID="DocNum" runat="server">Doctor Number</asp:TextBox>
+    
         <hr />
     
     </div>
+    <asp:Calendar ID="AppointmentCal" runat="server" Caption="Start Date" 
+        onselectionchanged="AppointmentCal_SelectionChanged"></asp:Calendar>
+    <asp:DropDownList ID="StartHour" runat="server">
+    </asp:DropDownList>
+    <asp:DropDownList ID="StartMin" runat="server">
+    </asp:DropDownList>
+    <asp:DropDownList ID="StartAmPm" runat="server">
+    </asp:DropDownList>
+    <br />
+    <asp:Calendar ID="AppointmentCalEnd" runat="server" Caption="End Date">
+    </asp:Calendar>
+    <asp:DropDownList ID="EndHour" runat="server">
+    </asp:DropDownList>
+    <asp:DropDownList ID="EndMin" runat="server">
+    </asp:DropDownList>
+    <asp:DropDownList ID="EndAmPm" runat="server">
+    </asp:DropDownList>
+    <br />
+    \<asp:Button ID="Button1" runat="server" onclick="Button1_Click" 
+        Text="Book Appointment" />
     </form>
 </body>
 </html>
