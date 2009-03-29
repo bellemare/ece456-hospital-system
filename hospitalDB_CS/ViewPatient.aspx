@@ -27,8 +27,11 @@
         <br />
         Welcome,     
         <asp:Label ID="PatientName" runat="server"></asp:Label>
+        <br />
+        <asp:Label ID="Label1" runat="server"></asp:Label>
         <asp:GridView ID="selfgrid" runat="server" AutoGenerateEditButton="True" 
-            DataSourceID="selfinfo" Visible="False" DataKeyNames="PatientID">
+            DataSourceID="selfinfo" Visible="False" DataKeyNames="PatientID" 
+            onrowupdating="selfgrid_RowUpdating">
         </asp:GridView>
         <asp:SqlDataSource ID="selfinfo" runat="server" 
             ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 

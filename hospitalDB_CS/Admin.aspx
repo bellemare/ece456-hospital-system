@@ -143,6 +143,8 @@
         <hr />
     
     <br />
+        
+        <input type="button" value="Back" name="ClickBack" onclick=(history.back())><br />
     </form>
 </body>
 </html>
