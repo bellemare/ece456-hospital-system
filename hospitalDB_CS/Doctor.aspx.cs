@@ -31,6 +31,7 @@ public partial class Doctor : System.Web.UI.Page
     protected void ViewYourPatients_Click(object sender, EventArgs e)
     {
         Patients.Visible = true;
+        PatientData.SelectCommand = "SELECT PatientID,PatientName,Address,PhoneNum,(SELECT COUNT(*) FROM visits as v WHERE v.PatientID=p.PatientID) as NumVisits,Doctor,Status FROM patients as p WHERE (Doctor ='"+ Request.QueryString["empID"]+"')"; 
     }
     
     protected void Patients_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -151,10 +152,9 @@ public partial class Doctor : System.Web.UI.Page
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         string oldSel = PatientData.SelectCommand;
-        PatientData.SelectCommand = "Select Patients.PatientID, Patients.PatientName, Patients.PhoneNum, Patients.NumVisits, Patients.Doctor, Patients.Status from Patients where Doctor=" + Request.QueryString["empID"] + " AND ( PatientName LIKE '%" + txtPatient.Text + "%' OR PatientID LIKE '%" + txtPatient.Text + "%')";
-        Patients.DataSource = PatientData;
+        PatientData.SelectCommand = "Select Patients.PatientID, Patients.PatientName,Patients.Address, Patients.PhoneNum, (SELECT COUNT(*) FROM visits as v WHERE v.PatientID=Patients.PatientID) as NumVisits, Patients.Doctor, Patients.Status from Patients where Doctor=" + Request.QueryString["empID"] + " AND ( PatientName LIKE '%" + txtPatient.Text + "%' OR PatientID LIKE '%" + txtPatient.Text + "%')";
         Patients.DataBind();
-        PatientData.SelectCommand = oldSel;
+        //PatientData.SelectCommand = oldSel;
     }
 
     protected void  EditPatient_Clicked(object sender, EventArgs e)
