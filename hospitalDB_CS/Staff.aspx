@@ -12,6 +12,10 @@
             text-decoration: underline;
             color: #000099;
         }
+        .style2
+        {
+            width: 331px;
+        }
     </style>
 </head>
 <body>
@@ -32,8 +36,6 @@
         <asp:Label ID="Label1" runat="server"></asp:Label>
         <br />
     
-        <hr />
-    
     </div>
     <asp:Label ID="Label2" runat="server" Text="Patient"></asp:Label>
     <asp:DropDownList ID="PatNum" runat="server" DataSourceID="PatNums" 
@@ -41,9 +43,16 @@
     </asp:DropDownList>
     <asp:Label ID="Label3" runat="server" Text="Doctor"></asp:Label>
     <asp:DropDownList ID="DocNum" runat="server" DataSourceID="DocNums" 
-        DataTextField="EmployeeName" DataValueField="EmployeeID" Height="16px">
+        DataTextField="EmployeeName" DataValueField="EmployeeID">
     </asp:DropDownList>
     <br />
+    
+        <hr />
+    
+    <br />
+    <table style="width:100%;">
+        <tr>
+            <td class="style2">
     <asp:Calendar ID="AppointmentCal" runat="server" Caption="Start Date" 
         onselectionchanged="AppointmentCal_SelectionChanged"></asp:Calendar>
     <asp:DropDownList ID="StartHour" runat="server">
@@ -52,7 +61,8 @@
     </asp:DropDownList>
     <asp:DropDownList ID="StartAmPm" runat="server">
     </asp:DropDownList>
-    <br />
+            </td>
+            <td>
     <asp:Calendar ID="AppointmentCalEnd" runat="server" Caption="End Date">
     </asp:Calendar>
     <asp:DropDownList ID="EndHour" runat="server">
@@ -61,13 +71,19 @@
     </asp:DropDownList>
     <asp:DropDownList ID="EndAmPm" runat="server">
     </asp:DropDownList>
-    <br />
-    \<asp:TextBox ID="CommentsBox" runat="server" Height="115px" 
-        TextMode="MultiLine" Width="352px">Comments</asp:TextBox>
-    <p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:TextBox ID="CommentsBox" runat="server" Height="115px" 
+        TextMode="MultiLine" Width="606px">Comments</asp:TextBox>
         <asp:Button ID="Button1" runat="server" onclick="Button1_Click" 
-        Text="Book Appointment" />
-    </p>
+        Text="Book Appointment" Height="92px" />
+            </td>
+        </tr>
+    </table>
+    <br />
+    <hr />
     <p>
         <asp:Button ID="AppointmentsBut" runat="server" onclick="AppointmentsBut_Click" 
             Text="Edit Appointments" />
@@ -98,6 +114,7 @@
         </DeleteParameters>
     </asp:SqlDataSource>
     <br />
+    <hr />
     <br />
     
     <asp:TextBox ID="patientName" runat="server">Patient Name</asp:TextBox>
@@ -162,6 +179,7 @@
             <asp:ControlParameter ControlID="patientGrid" PropertyName="SelectedRow.Cells[9].Text" Name="Status" Type="UInt32" />
         </UpdateParameters>
         </asp:SqlDataSource>
+    <hr />
     </form>
 <p class="style1">
         
