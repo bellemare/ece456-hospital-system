@@ -249,5 +249,39 @@ public partial class Staff : System.Web.UI.Page
             //0=PatientName,1=Address,2=PhoneNum,3=HealthCardNum
             //4=SIN,5=NumVisits,6=Doctor,7=Status
         }
+
+        for (int i = 0; i < e.NewValues.Count; i++)
+        {
+            if (e.NewValues[i].ToString() != e.OldValues[i].ToString())
+            {
+                MySqlConnection con = new MySqlConnection("Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';");
+                MySqlCommand cmd = new MySqlCommand();
+                //string now = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + " " + DateTime.Now.ToLongTimeString();
+                string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                cmd.CommandText = "INSERT INTO audit (TableChanged, ColumnChanged, OldValue, NewValue, DateChanged) VALUES ('patients', '" + (i + 1).ToString() + "', '" + e.OldValues[i].ToString() + "', '" + e.NewValues[i].ToString() + "', '" + now + "' )";
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+    }
+    protected void AppointmentView_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {
+        for (int i = 0; i < e.NewValues.Count; i++)
+        {
+            if (e.NewValues[i].ToString() != e.OldValues[i].ToString())
+            {
+                MySqlConnection con = new MySqlConnection("Server='localhost';Database='hospital_G004';Uid=root;Pwd='sasha';");
+                MySqlCommand cmd = new MySqlCommand();
+                //string now = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + " " + DateTime.Now.ToLongTimeString();
+                string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                cmd.CommandText = "INSERT INTO audit (TableChanged, ColumnChanged, OldValue, NewValue, DateChanged) VALUES ('patients', '" + (i + 1).ToString() + "', '" + e.OldValues[i].ToString() + "', '" + e.NewValues[i].ToString() + "', '" + now + "' )";
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
     }
 }
