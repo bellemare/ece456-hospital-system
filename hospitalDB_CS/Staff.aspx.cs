@@ -27,7 +27,25 @@ public partial class Staff : System.Web.UI.Page
                     l = new ListItem("0" + i.ToString(), "0" + i.ToString());
                 else
                     l = new ListItem(i.ToString(), i.ToString());
+                
+            StartHour.Items.Add(l);
+            EndHour.Items.Add(l);
             }
+
+            for (int i = 0; i <= 59; i++)
+            {
+                if (i < 10)
+                    l = new ListItem("0" + i.ToString(), "0" + i.ToString());
+                else
+                    l = new ListItem(i.ToString(), i.ToString());
+
+                StartMin.Items.Add(l);
+                EndMin.Items.Add(l);
+            }
+            StartAmPm.Items.Add("AM");
+            StartAmPm.Items.Add("PM");
+            EndAmPm.Items.Add("AM");
+            EndAmPm.Items.Add("PM");
         }
 
     }
