@@ -41,11 +41,6 @@ public partial class Default2 : System.Web.UI.Page
     }
     protected void loginBtn_Click(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
-            Session["LoginCount"] = 0;
-        
-        Session["LoginCount"] = (int)Session["LoginCount"] + 1;
-
         MySqlCommand cmd;
         if (radBtn.Items[0].Selected)
         {
@@ -100,14 +95,7 @@ public partial class Default2 : System.Web.UI.Page
                 }
                 else 
                 {
-                    if ((int)Session["LoginCount"] > 3)
-                    {
-                        Response.Redirect("Failure.aspx", true);
-                    }
-                    else
-                        statusLbl.Text = "Login Failed: " + (4 - (int)Session["LoginCount"]) + " attempts left";
-                
-
+                    statusLbl.Text = "Username and/or Password is incorrect";
                 }
             }
 
