@@ -88,11 +88,14 @@
         onrowediting="PatientView_RowEditing" DataKeyNames="VisitID" 
         DataSourceID="PatientData" onrowupdating="PatientView_RowUpdating" 
         onrowupdated="PatientView_RowUpdated">
+        <SelectedRowStyle BorderColor="Red" BorderStyle="Solid" />
     </asp:GridView>
-    <asp:Button ID="SurgBut" runat="server" Text="Add Surgery Details" />
-    <asp:Button ID="PresBut" runat="server" Text="Add Prescription Details" />
+    <asp:Button ID="SurgBut" runat="server" Text="Add Surgery Details" 
+        onclick="SurgBut_Click" Visible="False" />
+    <asp:Button ID="PresBut" runat="server" Text="Add Prescription Details" 
+        onclick="PresBut_Click" Visible="False" />
     <asp:Button ID="DiagBut" runat="server" Height="26px" Text="Add Diagnosis" 
-        Width="109px" />
+        Width="109px" onclick="DiagBut_Click" Visible="False" />
     <asp:SqlDataSource ID="PatientData" runat="server" 
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
         ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>"
@@ -105,7 +108,7 @@
         </asp:SqlDataSource>
         <br />
         
-        <input type="button" value="Back" name="ClickBack" onclick=(history.back())>
+        <input type="button" value="Back" name="ClickBack" onclick=(history.back())/>
     </form>
 </body>
 </html>
