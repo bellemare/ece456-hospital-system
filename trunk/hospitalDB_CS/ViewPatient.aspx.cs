@@ -22,6 +22,9 @@ public partial class ViewPatient : System.Web.UI.Page
         {
             selfgrid.Visible = true;
         }
+        else
+        {
+        }
     }
 
     protected void ViewSurgeries_Click(object sender, EventArgs e)
@@ -163,7 +166,7 @@ public partial class ViewPatient : System.Web.UI.Page
         }
         else
         {
-            PatientData.SelectCommand = "SELECT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments FROM visits WHERE PatientID = " + Request.QueryString["patID"];
+            PatientData.SelectCommand = "SELECT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments FROM visits WHERE (PatientID = " + Request.QueryString["patID"] + " AND StartDate > '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
             PatientView.AutoGenerateEditButton = false;
             SurgBut.Visible = false;
             PresBut.Visible = false;
@@ -281,5 +284,18 @@ public partial class ViewPatient : System.Web.UI.Page
             }
             Label1.Text = "Update Successful";
         }
+    }
+    protected void SurgBut_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("EditSurgeries.aspx?patID=" + Request.QueryString["patID"] + "&visID=" + PatientView.SelectedRow.Cells[1].Text + "&empID=" + Request.QueryString["empID"]);
+    }
+    protected void PresBut_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("EditPrescriptions.aspx?patID=" + Request.QueryString["patID"] + "&visID=" + PatientView.SelectedRow.Cells[1].Text + "&empID=" + Request.QueryString["empID"]);
+    }
+    protected void DiagBut_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("EditDiagnosis.aspx?patID=" + Request.QueryString["patID"] + "&visID=" + PatientView.SelectedRow.Cells[1].Text + "&empID=" + Request.QueryString["empID"]);
+
     }
 }
