@@ -21,9 +21,11 @@ public partial class ViewPatient : System.Web.UI.Page
         if (Request.QueryString["empID"] == null)
         {
             selfgrid.Visible = true;
+            Button1.Text = "View Appointments";
         }
         else
         {
+            Button1.Text = "View Incomplete Visits";
         }
     }
 
@@ -31,7 +33,10 @@ public partial class ViewPatient : System.Web.UI.Page
     {
         string surgEmp = "SELECT visits.VisitID,visits.StartDate,visits.EndDate,visits.Comments,surgeries.Type,surgeries.Comments FROM visits,surgeries WHERE PatientID = " + Request.QueryString["patID"] + " AND DoctorID = " + Request.QueryString["empID"] + " AND visits.VisitID = surgeries.VisitID";
         string surgPat = "SELECT visits.VisitID,visits.StartDate,visits.EndDate,visits.Comments,surgeries.Type,surgeries.Comments FROM visits,surgeries WHERE PatientID = " + Request.QueryString["patID"] + " AND visits.VisitID = surgeries.VisitID";
-        
+        SurgBut.Visible = false;
+        PresBut.Visible = false;
+        DiagBut.Visible = false;
+
         Session["appointments"] = 0;
         Session["visits"] = 0;
         Session["surg"] = 1;
@@ -50,6 +55,9 @@ public partial class ViewPatient : System.Web.UI.Page
     {
         string presEmp = "SELECT visits.VisitID,visits.StartDate,visits.EndDate,visits.Comments,prescriptions.Type,prescriptions.Dosage,prescriptions.Comments FROM visits,prescriptions WHERE PatientID = " + Request.QueryString["patID"] + " AND DoctorID = " + Request.QueryString["empID"] + " AND visits.VisitID = prescriptions.VisitID";
         string presPat = "SELECT visits.VisitID,visits.StartDate,visits.EndDate,visits.Comments,prescriptions.Type,prescriptions.Dosage,prescriptions.Comments FROM visits,prescriptions WHERE PatientID = " + Request.QueryString["patID"] + " AND visits.VisitID = prescriptions.VisitID";
+        SurgBut.Visible = false;
+        PresBut.Visible = false;
+        DiagBut.Visible = false;
 
         Session["appointments"] = 0;
         Session["visits"] = 0;
@@ -70,14 +78,13 @@ public partial class ViewPatient : System.Web.UI.Page
         Session["visits"] = 1;
         Session["surg"] = 0;
         Session["pres"] = 0;
+        SurgBut.Visible = false;
+        PresBut.Visible = false;
+        DiagBut.Visible = false;
 
         if (Request.QueryString["empID"] != null)
         {
             PatientData.SelectCommand = "SELECT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments, diagnosis.Outcome, diagnosis.Comments FROM visits,diagnosis WHERE PatientID = " + Request.QueryString["patID"] + " AND DoctorID = " + Request.QueryString["empID"] + " AND visits.VisitID = diagnosis.VisitID";
-            PatientView.AutoGenerateEditButton = true;
-            SurgBut.Visible = true;
-            PresBut.Visible = true;
-            DiagBut.Visible = true;
             SurgBut.Text = "Edit Surgery Details";
             PresBut.Text = "Edit Prescription Details";
             DiagBut.Text = "Edit Diagnosis Details";
@@ -85,7 +92,6 @@ public partial class ViewPatient : System.Web.UI.Page
         else
         {
             PatientData.SelectCommand = "SELECT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments, diagnosis.Outcome, diagnosis.Comments FROM visits,diagnosis WHERE PatientID = " + Request.QueryString["patID"] + " AND visits.VisitID = diagnosis.VisitID";
-            PatientView.AutoGenerateEditButton = false;
             SurgBut.Visible = false;
             PresBut.Visible = false;
             DiagBut.Visible = false;
@@ -151,11 +157,13 @@ public partial class ViewPatient : System.Web.UI.Page
         Session["visits"] = 0;
         Session["surg"] = 0;
         Session["pres"] = 0;
+        SurgBut.Visible = true;
+        PresBut.Visible = true;
+        DiagBut.Visible = true;
         
         if (Request.QueryString["empID"] != null)
         {
             PatientData.SelectCommand = "SELECT DISTINCT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments FROM visits,diagnosis WHERE PatientID = " + Request.QueryString["patID"] + " AND DoctorID = " + Request.QueryString["empID"] + " AND visits.VisitID not in (Select VisitID from diagnosis)";
-            PatientView.AutoGenerateEditButton = true;
             PatientView.AutoGenerateSelectButton = true;
             SurgBut.Visible = true;
             PresBut.Visible = true;
@@ -167,7 +175,6 @@ public partial class ViewPatient : System.Web.UI.Page
         else
         {
             PatientData.SelectCommand = "SELECT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments FROM visits WHERE (PatientID = " + Request.QueryString["patID"] + " AND StartDate > '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
-            PatientView.AutoGenerateEditButton = false;
             SurgBut.Visible = false;
             PresBut.Visible = false;
             DiagBut.Visible = false;

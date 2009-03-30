@@ -284,4 +284,8 @@ public partial class Staff : System.Web.UI.Page
             }
         }
     }
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewPatient.aspx?patID=" + Patients.SelectedRow.Cells[1].Text);
+    }
 }

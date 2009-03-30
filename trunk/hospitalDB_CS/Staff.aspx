@@ -180,6 +180,38 @@
         </UpdateParameters>
         </asp:SqlDataSource>
     <hr />
+    <asp:GridView ID="Patients" runat="server" 
+        DataSourceID="PatientData0" DataKeyNames="PatientID" 
+        AutoGenerateSelectButton="True">
+        <SelectedRowStyle BorderColor="Red" BorderStyle="Solid" />
+    </asp:GridView>
+    <asp:Button ID="Button2" runat="server" onclick="Button2_Click" 
+        Text="View Patient Details" />
+    <asp:SqlDataSource ID="PatientData0" runat="server" 
+        ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
+        ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>" 
+        SelectCommand="SELECT PatientID,PatientName,Address,PhoneNum,(SELECT COUNT(*) FROM visits as v WHERE v.PatientID=p.PatientID) as NumVisits,Doctor,Status FROM patients as p WHERE (PatientID in (Select PatientID FROM viewingrights WHERE EmployeeID=@empID))" 
+        UpdateCommand="UPDATE patients SET PatientName=@PatientName, Address=@Address,PhoneNum=@PhoneNum,NumVisits=@NumVisits,Doctor=@Doctor,Status=@Status WHERE PatientID=@PatientID"
+        DeleteCommand="DELETE FROM patients WHERE PatientID=@PatientID">
+        <DeleteParameters>
+            <asp:SessionParameter SessionField="Deleting" Name="PatientID" />
+        </DeleteParameters>
+        <SelectParameters>
+            <asp:QueryStringParameter Name="empID" QueryStringField="empID" />
+        </SelectParameters>
+        <UpdateParameters>
+            <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[0].Text" Name="PatientID" Type="UInt32" />
+            <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[1].Text" Name="PatientName" Type="String" />
+            <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[2].Text" Name="Address" Type="String" />
+            <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[3].Text" Name="PhoneNum" Type="String" />
+            <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[4].Text" Name="HealthCardNum" Type="String" />
+            <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[5].Text" Name="SIN" Type="String" />
+            <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[6].Text" Name="NumVisits" Type="UInt32" />
+            <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[7].Text" Name="Doctor" Type="UInt32" />
+            <asp:ControlParameter ControlID="Patients" PropertyName="SelectedRow.Cells[8].Text" Name="Status" Type="UInt32" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
+    <br />
     </form>
 <p class="style1">
         
