@@ -77,6 +77,8 @@
     
         <br />
     
+        <br />
+    
     </div>
     <asp:GridView ID="PatientView" runat="server" 
         onrowcancelingedit="PatientView_RowCancelingEdit" 
