@@ -58,7 +58,7 @@
         <br />
         View all your previous and future appointments to the Hospital<br />
     
-        <asp:Button ID="ViewVisits" runat="server" Text="View Visits" 
+        <asp:Button ID="ViewVisits" runat="server" Text="View Diagnosis" 
             onclick="ViewVisits_Click" Width="160px" />
     
         <asp:Button ID="Button1" runat="server" Text="View Appointments" 
