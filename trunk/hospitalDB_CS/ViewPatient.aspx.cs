@@ -28,7 +28,8 @@ public partial class ViewPatient : System.Web.UI.Page
     {
         string surgEmp = "SELECT visits.VisitID,visits.StartDate,visits.EndDate,visits.Comments,surgeries.Type,surgeries.Comments FROM visits,surgeries WHERE PatientID = " + Request.QueryString["patID"] + " AND DoctorID = " + Request.QueryString["empID"] + " AND visits.VisitID = surgeries.VisitID";
         string surgPat = "SELECT visits.VisitID,visits.StartDate,visits.EndDate,visits.Comments,surgeries.Type,surgeries.Comments FROM visits,surgeries WHERE PatientID = " + Request.QueryString["patID"] + " AND visits.VisitID = surgeries.VisitID";
-
+        
+        Session["appointments"] = 0;
         Session["visits"] = 0;
         Session["surg"] = 1;
         Session["pres"] = 0;
@@ -47,6 +48,7 @@ public partial class ViewPatient : System.Web.UI.Page
         string presEmp = "SELECT visits.VisitID,visits.StartDate,visits.EndDate,visits.Comments,prescriptions.Type,prescriptions.Dosage,prescriptions.Comments FROM visits,prescriptions WHERE PatientID = " + Request.QueryString["patID"] + " AND DoctorID = " + Request.QueryString["empID"] + " AND visits.VisitID = prescriptions.VisitID";
         string presPat = "SELECT visits.VisitID,visits.StartDate,visits.EndDate,visits.Comments,prescriptions.Type,prescriptions.Dosage,prescriptions.Comments FROM visits,prescriptions WHERE PatientID = " + Request.QueryString["patID"] + " AND visits.VisitID = prescriptions.VisitID";
 
+        Session["appointments"] = 0;
         Session["visits"] = 0;
         Session["surg"] = 0;
         Session["pres"] = 1;
@@ -61,6 +63,7 @@ public partial class ViewPatient : System.Web.UI.Page
     }
     protected void ViewVisits_Click(object sender, EventArgs e)
     {
+        Session["appointments"] = 0;
         Session["visits"] = 1;
         Session["surg"] = 0;
         Session["pres"] = 0;
@@ -69,11 +72,20 @@ public partial class ViewPatient : System.Web.UI.Page
         {
             PatientData.SelectCommand = "SELECT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments, diagnosis.Outcome, diagnosis.Comments FROM visits,diagnosis WHERE PatientID = " + Request.QueryString["patID"] + " AND DoctorID = " + Request.QueryString["empID"] + " AND visits.VisitID = diagnosis.VisitID";
             PatientView.AutoGenerateEditButton = true;
+            SurgBut.Visible = true;
+            PresBut.Visible = true;
+            DiagBut.Visible = true;
+            SurgBut.Text = "Edit Surgery Details";
+            PresBut.Text = "Edit Prescription Details";
+            DiagBut.Text = "Edit Diagnosis Details";
         }
         else
         {
             PatientData.SelectCommand = "SELECT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments, diagnosis.Outcome, diagnosis.Comments FROM visits,diagnosis WHERE PatientID = " + Request.QueryString["patID"] + " AND visits.VisitID = diagnosis.VisitID";
             PatientView.AutoGenerateEditButton = false;
+            SurgBut.Visible = false;
+            PresBut.Visible = false;
+            DiagBut.Visible = false;
         }
     }
     protected void PatientView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -90,6 +102,8 @@ public partial class ViewPatient : System.Web.UI.Page
             ViewSurgeries_Click(null, EventArgs.Empty);
         else if ((int)Session["pres"] == 1)
             ViewPrescriptions_Click(null, EventArgs.Empty);
+        else if ((int)Session["appointments"] == 1)
+            Button1_Click(null, EventArgs.Empty);
 
     }
 
@@ -97,13 +111,21 @@ public partial class ViewPatient : System.Web.UI.Page
     {
         string oldDate;
         DateTime newDateTime;
+        DateTime newDateTime2;
+
 
         oldDate = ((TextBox)PatientView.SelectedRow.Cells[2].Controls[0]).Text;
         newDateTime = Convert.ToDateTime(oldDate);
         Session["newStartDate"] = newDateTime.ToString("yyyy-MM-dd HH:mm:ss");
         oldDate = ((TextBox)PatientView.SelectedRow.Cells[3].Controls[0]).Text;
-        newDateTime = Convert.ToDateTime(oldDate);
-        Session["newEndDate"] = newDateTime.ToString("yyyy-MM-dd HH:mm:ss");       
+        newDateTime2 = Convert.ToDateTime(oldDate);
+        Session["newEndDate"] = newDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+        if (newDateTime2 < newDateTime)
+        {
+            e.Cancel = true;
+            Label1.Text = "End Date must be after Start Date";
+        }
+
     }
 
     protected void PatientView_RowUpdated(object sender, GridViewUpdatedEventArgs e)
@@ -114,7 +136,42 @@ public partial class ViewPatient : System.Web.UI.Page
             ViewSurgeries_Click(null, EventArgs.Empty);
         else if ((int)Session["pres"] == 1)
             ViewPrescriptions_Click(null, EventArgs.Empty);
+        else if ((int)Session["appointments"] == 1)
+            Button1_Click(null, EventArgs.Empty);
+
+        Label1.Text = "";
     }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Session["appointments"] = 1;
+        Session["visits"] = 0;
+        Session["surg"] = 0;
+        Session["pres"] = 0;
+        
+        if (Request.QueryString["empID"] != null)
+        {
+            PatientData.SelectCommand = "SELECT DISTINCT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments FROM visits,diagnosis WHERE PatientID = " + Request.QueryString["patID"] + " AND DoctorID = " + Request.QueryString["empID"] + " AND visits.VisitID not in (Select VisitID from diagnosis)";
+            PatientView.AutoGenerateEditButton = true;
+            PatientView.AutoGenerateSelectButton = true;
+            SurgBut.Visible = true;
+            PresBut.Visible = true;
+            DiagBut.Visible = true;
+            SurgBut.Text = "Edit Surgery Details";
+            PresBut.Text = "Edit Prescription Details";
+            DiagBut.Text = "Edit Diagnosis Details";
+        }
+        else
+        {
+            PatientData.SelectCommand = "SELECT visits.VisitID, visits.StartDate, visits.EndDate, visits.Comments FROM visits WHERE PatientID = " + Request.QueryString["patID"];
+            PatientView.AutoGenerateEditButton = false;
+            SurgBut.Visible = false;
+            PresBut.Visible = false;
+            DiagBut.Visible = false;
+        }
+
+    }
+
     protected void selfgrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         Label1.Text = "";

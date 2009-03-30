@@ -58,8 +58,11 @@
         <br />
         View all your previous and future appointments to the Hospital<br />
     
-        <asp:Button ID="ViewVisits" runat="server" Text="View Appointments" 
+        <asp:Button ID="ViewVisits" runat="server" Text="View Visits" 
             onclick="ViewVisits_Click" Width="160px" />
+    
+        <asp:Button ID="Button1" runat="server" Text="View Appointments" 
+            onclick="Button1_Click" />
     
         <br />
         <hr />
@@ -86,6 +89,10 @@
         DataSourceID="PatientData" onrowupdating="PatientView_RowUpdating" 
         onrowupdated="PatientView_RowUpdated">
     </asp:GridView>
+    <asp:Button ID="SurgBut" runat="server" Text="Add Surgery Details" />
+    <asp:Button ID="PresBut" runat="server" Text="Add Prescription Details" />
+    <asp:Button ID="DiagBut" runat="server" Height="26px" Text="Add Diagnosis" 
+        Width="109px" />
     <asp:SqlDataSource ID="PatientData" runat="server" 
         ConnectionString="<%$ ConnectionStrings:hospital_G004ConnectionString %>" 
         ProviderName="<%$ ConnectionStrings:hospital_G004ConnectionString.ProviderName %>"
