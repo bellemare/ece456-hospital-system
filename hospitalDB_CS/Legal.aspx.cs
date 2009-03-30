@@ -10,11 +10,18 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using MySql.Data.MySqlClient;
 
 public partial class Legal : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!Page.IsPostBack)
+            auditGrid.Visible = false;    
+    }
+    protected void getAuditButton_Click(object sender, EventArgs e)
+    {
+        auditGrid.Visible = true;
+        auditConnect.SelectCommand = "Select * from audit";
     }
 }

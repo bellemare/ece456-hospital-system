@@ -192,4 +192,8 @@ public partial class Default2 : System.Web.UI.Page
             Label1.Text = "Update Successful";
         }
     }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Legal.aspx");
+    }
 }

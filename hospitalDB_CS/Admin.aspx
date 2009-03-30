@@ -17,6 +17,8 @@
             font-weight: bold;
             text-decoration: underline;
         }
+        #form1
+        {}
     </style>
 </head>
 <body>
@@ -142,9 +144,17 @@
     
         <hr />
     
-    <br />
-        
-        <input type="button" value="Back" name="ClickBack" onclick=(history.back())><br />
+    <p class="style2">
+        View Audit Trail</p>
+    <p>
+        <asp:Button ID="Button1" runat="server" Text="Audit Trail" 
+            onclick="Button1_Click" />
+    </p>
     </form>
+<hr />
+<p>
+        
+        <input type="button" value="Back" name="ClickBack0" 
+        onclick=(history.back())></p>
 </body>
 </html>
