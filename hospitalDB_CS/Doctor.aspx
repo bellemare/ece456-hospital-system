@@ -75,6 +75,8 @@
     View the details of the selected patient:<br />
     <asp:Button ID="EditPatient" runat="server" Text="View Patient Details" 
         onclick="EditPatient_Clicked" Width="160px" />
+    <asp:Button ID="btnViewRight" runat="server" Text="Viewing Rights" 
+        onclick="btnViewRight_Click" />
     <br />
     <br />
     <asp:Button ID="btnViewAll" runat="server" Text="View All Patients" 

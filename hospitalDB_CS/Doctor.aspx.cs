@@ -175,4 +175,9 @@ public partial class Doctor : System.Web.UI.Page
     {
         allpatientGrid.Visible = true;
     }
+    protected void btnViewRight_Click(object sender, EventArgs e)
+    {
+        if (Patients.SelectedIndex != -1)
+            Response.Redirect("ViewingRights.aspx?patID=" + Patients.DataKeys[Patients.SelectedIndex].Values[0].ToString() + "&empID=" + Request.QueryString["empID"]);
+    }
 }
